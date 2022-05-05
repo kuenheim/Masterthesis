@@ -1,0 +1,5 @@
+pd.read_csv('Update intervalls raw data\\Update_Intervall_a60_k1_b1.csv', index_col=0)
+pd.read_csv('Update intervalls raw data\\Update_Intervall_a60_k1_b2.csv', index_col=0)
+pd.read_csv('Update intervalls raw data\\Update_Intervall_a40_k1_b1.csv', index_col=0)
+pd.read_csv('Update intervalls raw data\\Update_Intervall_a40_k1_b2.csv', index_col=0)
+pd.read_csv('Update intervalls raw data\\Update_Intervall_a40_k1_b3.csv', index_col=0)
