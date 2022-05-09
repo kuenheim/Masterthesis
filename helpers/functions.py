@@ -5,7 +5,7 @@ import os
 import time
 from numpy import genfromtxt
 from opcua import Client
-from Masterthesis.helpers.lists import ids, val_id_type_dict
+from helpers.lists import ids, val_id_type_dict
 import pandas as pd
 from ast import literal_eval
 

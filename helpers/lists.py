@@ -1,3 +1,68 @@
+ids = ['bCutActive',
+       'CPU_Kuehler_Temp',
+       'CPU_Temp',
+       'CutCounter',
+       'CutTime',
+       'FFT_Anforderung',
+       'FlatstreamCutCounter',
+       'FlatstreamDone',
+       'fLichtschranke',
+       'FsMode_1Raw_2FftRaw_3FttHK',
+       'HebenAktiv',
+       'MotorAn',
+       'obereMaterialkante',
+       'P_Vorschub',
+       'Position',
+       'Position_Band',
+       'vVorschub',
+       'ZaehneProBand',
+       'FFT_HK1.value',
+       'FFT_HK1.freq',
+       'FFT_HK2.value',
+       'FFT_HK2.freq',
+       'FFT_HK3.value',
+       'FFT_HK3.freq',
+       'FFT_Raw1.value',
+       'FFT_Raw1.freq',
+       'FFT_Raw2.value',
+       'FFT_Raw2.freq',
+       'FFT_Raw3.value',
+       'FFT_Raw3.freq',
+       'PData.PEff',
+       'PData.CosPhi',
+       'PData.CutEnergy',
+       'Signal_Raw1.value',
+       'Signal_Raw1.time',
+       'Signal_Raw2.value',
+       'Signal_Raw2.time',
+       'Signal_Raw3.value',
+       'Signal_Raw3.time',
+       'TData.T1',
+       'TData.T2',
+       'TData.T3',
+       'TData.T4',
+       'Vib01.FrequencyBands',
+       'Vib01.RMS',
+       'Vib01.Peak',
+       'Vib01.CREST',
+       'Vib01.Skewness',
+       'Vib01.Kurtosis',
+       'Vib01.VDI3832',
+       'Vib02.FrequencyBands',
+       'Vib02.RMS',
+       'Vib02.Peak',
+       'Vib02.CREST',
+       'Vib02.Skewness',
+       'Vib02.Kurtosis',
+       'Vib02.VDI3832',
+       'Vib03.FrequencyBands',
+       'Vib03.RMS',
+       'Vib03.Peak',
+       'Vib03.CREST',
+       'Vib03.Skewness',
+       'Vib03.Kurtosis',
+       'Vib03.VDI3832',
+       'TData.T_IR', ]
 import os
 data_root_path = 'E:\\ausgelagert thesis daten\\'
 
@@ -15,9 +80,16 @@ irrelevant_sensors = list(range(65))
 for i in relevant_input_sensors:
     irrelevant_sensors.remove(i)
  #"""
+
+classes = {1: '1a6', 2: '2a6', 3: '3a6', 4: '4a6', 5: '5a6', 6: '1a47',7: '2a47',8: '3a47',9: '4a47',10: '5a47',11: '1a49',12: '2a49',13: '3a49',14: '4a49',15: '5a49'}
+
+
 rel_ids = [8, 13, 14, 15, 16, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 50, 51, 52, 53, 54, 55, 57, 58, 59, 60, 61, 62, 64]
 irrelevant_sensors = [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 49, 56, 63]
 rel_ids_no_list = [8, 13, 14, 15, 16, 30, 31, 32, 39, 40, 41, 42, 44, 45, 46, 47, 48, 51, 52, 53, 54, 55, 58, 59, 60, 61, 62, 64]
+rel_ids_no_list_no_vibs = [8, 13, 14, 15, 16, 30, 31, 32, 39, 40, 41, 42, 64]
+rel_ids_vib_only_no_list = [44, 45, 46, 47, 48, 51, 52, 53, 54, 55, 58, 59, 60, 61, 62]
+
 
 path0 = 'file10_10min - Kopie.csv'
 path1 = os.path.join(data_root_path, 'first tests\\testing_edelstahl_all_30-ms_1369-cutcounter04-02-2022_13-47-09.csv')

@@ -1697,7 +1697,7 @@ tcutactive_false5a49.to_csv(os.path.join(path_final_data, 'tcutactive_false5a49.
 
 path_final_data = 'E:\\ausgelagert thesis daten\\final_data\\cut_start_stop_times'
 
-#load_new_cutas = """
+load_new_cutas = """
 # train true
 cutactive_true1a6 = pd.read_csv(os.path.join(path_final_data, 'cutactive_true1a6.csv'), index_col='idx', usecols=['idx', 'shifted'], parse_dates=['shifted'])
 cutactive_true2a6 = pd.read_csv(os.path.join(path_final_data, 'cutactive_true2a6.csv'), index_col='idx', usecols=['idx', 'shifted'], parse_dates=['shifted'])
@@ -1800,7 +1800,7 @@ tactive_cut_data4a49_newer = sep_cuts_all(tcutactive_true4a49, tcutactive_false4
 tactive_cut_data5a49_newer = sep_cuts_all(tcutactive_true5a49, tcutactive_false5a49, tk5a49_id, rids, 0, 0)
 #"""
 
-#load_precut_class_sigraw_TRAIN = """
+load_precut_class_sigraw_TRAIN = """
 print('0')
 #sig1a6_id = concat_dfs_sep_ids(sig1a6, sig=True)
 #cut_concat_save_sig('1a6', cutactive_true1a6, cutactive_false1a6, sig1a6_id)

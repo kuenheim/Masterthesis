@@ -1,5 +1,6 @@
 from helpers.functions import dfs_for_timetest_csv, sort_per_id, sort_per_id_vib
-from helpers.lists import ids, val_id_type_dict, paths, short_labels, rel_ids, rel_ids_no_list, pahts_sigs , tpahts_sigs, pahts_data , tpahts_data
+from helpers.lists import ids, val_id_type_dict, paths, short_labels, rel_ids, rel_ids_no_list, pahts_sigs
+from helpers.lists import tpahts_sigs, pahts_data, tpahts_data, rel_ids_no_list_no_vibs, rel_ids_vib_only_no_list
 from seperate_cuts import sep_cuts_all_sensors, concat_dfs_sep_ids, qnd_outlier_indices, qnd_bandpass_per_class, plot_all_cuts_overlapping, plot_sensors_and_cutactive
 from helpers.functions import cuta_TRAINBAND_true, cuta_TESTBAND_true, cuta_TRAINBAND_false, cuta_TESTBAND_false
 
@@ -191,37 +192,6 @@ def metric_tables(y_test_TRAINBAND, res1):
         #   results_dataframe(scores_adv_fe), results_dataframe(scores_ts_fe)
 
 
-
-
-path_final_data = 'E:\\ausgelagert thesis daten\\final_data\\cut_start_stop_times'
-
-cutas_TRAINBAND_true_a6 = cuta_TRAINBAND_true(path_final_data, 'a6')
-cutas_TRAINBAND_false_a6 = cuta_TRAINBAND_false(path_final_data, 'a6')
-cutas_TRAINBAND_true_a47 = cuta_TRAINBAND_true(path_final_data, 'a47')
-cutas_TRAINBAND_false_a47 = cuta_TRAINBAND_false(path_final_data, 'a47')
-cutas_TRAINBAND_true_a49 = cuta_TRAINBAND_true(path_final_data, 'a49')
-cutas_TRAINBAND_false_a49 = cuta_TRAINBAND_false(path_final_data, 'a49')
-
-cutas_TESTBAND_true_a6 = cuta_TRAINBAND_true(path_final_data, 'a6')
-cutas_TESTBAND_false_a6 = cuta_TRAINBAND_false(path_final_data, 'a6')
-cutas_TESTBAND_true_a47 = cuta_TRAINBAND_true(path_final_data, 'a47')
-cutas_TESTBAND_false_a47 = cuta_TRAINBAND_false(path_final_data, 'a47')
-cutas_TESTBAND_true_a49 = cuta_TRAINBAND_true(path_final_data, 'a49')
-cutas_TESTBAND_false_a49 = cuta_TRAINBAND_false(path_final_data, 'a49')
-
-print('load data')
-ka6_id_ = [concat_dfs_sep_ids(x) for x in pahts_data[0:5]]
-ka47_id_ = [concat_dfs_sep_ids(x) for x in pahts_data[5:10]]
-ka49_id_ = [concat_dfs_sep_ids(x) for x in pahts_data[10:]]
-print('load data')
-tka6_id_ = [concat_dfs_sep_ids(x) for x in tpahts_data[0:5]]
-tka47_id_ = [concat_dfs_sep_ids(x) for x in tpahts_data[5:10]]
-tka49_id_ = [concat_dfs_sep_ids(x) for x in tpahts_data[10:]]
-
-# TODO Hier daten zwischenspeichern?
-
-
-
 def list_col_to_arr(data, idx, cols):
     df = data[idx]['val'].values
     rows = len(df)
@@ -245,41 +215,7 @@ def seperate_fbands(df):
     else:
         print('List already seperated')
     return df
-print('sep')
-TRAINBAND_ka6_id =  seperate_fbands(ka6_id_)
-TRAINBAND_ka47_id = seperate_fbands(ka47_id_)
-TRAINBAND_ka49_id = seperate_fbands(ka49_id_)
-print('sep')
 
-TESTBAND_ka6_id =  seperate_fbands(tka6_id_)
-TESTBAND_ka47_id = seperate_fbands(tka47_id_)
-TESTBAND_ka49_id = seperate_fbands(tka49_id_)
-
-
-idx_range_with_seperate_fbands = list(range(65, 89))
-new_ids = rel_ids_no_list + idx_range_with_seperate_fbands
-print('a')
-active_cut_data_a6_pre = [sep_cuts_all_sensors(cutas_TRAINBAND_true_a6[i], cutas_TRAINBAND_false_a6[i], j, new_ids, 0, 0) for i, j in enumerate(TRAINBAND_ka6_id)]
-active_cut_data_a47_pre = [sep_cuts_all_sensors(cutas_TRAINBAND_true_a47[i], cutas_TRAINBAND_false_a47[i], j, new_ids, 0, 0) for i, j in enumerate(TRAINBAND_ka47_id)]
-active_cut_data_a49_pre = [sep_cuts_all_sensors(cutas_TRAINBAND_true_a49[i], cutas_TRAINBAND_false_a49[i], j, new_ids, 0, 0) for i, j in enumerate(TRAINBAND_ka49_id)]
-print('ta')
-
-tactive_cut_data_a6_pre = [sep_cuts_all_sensors(cutas_TESTBAND_true_a6[i], cutas_TESTBAND_false_a6[i], j, new_ids, 0, 0) for i, j in enumerate(TESTBAND_ka6_id)]
-tactive_cut_data_a47_pre = [sep_cuts_all_sensors(cutas_TESTBAND_true_a47[i], cutas_TESTBAND_false_a47[i], j, new_ids, 0, 0) for i, j in enumerate(TESTBAND_ka47_id)]
-tactive_cut_data_a49_pre = [sep_cuts_all_sensors(cutas_TESTBAND_true_a49[i], cutas_TESTBAND_false_a49[i], j, new_ids, 0, 0) for i, j in enumerate(TESTBAND_ka49_id)]
-#active_cut_data1a6_newer =  sep_cuts_all_sensors(cutactive_true1a6, cutactive_false1a6, k1a6_id, rel_ids_no_list, 0, 0)
-#active_cut_data2a6_newer =  sep_cuts_all_sensors(cutactive_true2a6, cutactive_false2a6, k2a6_id, rel_ids_no_list, 0, 0)
-#active_cut_data3a6_newer =  sep_cuts_all_sensors(cutactive_true3a6, cutactive_false3a6, k3a6_id, rel_ids_no_list, 0, 0)
-#active_cut_data4a6_newer =  sep_cuts_all_sensors(cutactive_true4a6, cutactive_false4a6, k4a6_id, rel_ids_no_list, 0, 0)
-#active_cut_data5a6_newer =  sep_cuts_all_sensors(cutactive_true5a6, cutactive_false5a6, k5a6_id, rel_ids_no_list, 0, 0)
-
-#plot_all_cuts_overlapping(active_cut_data_a6_pre[0], 1, '1a6 newer slopecount')
-#plot_all_cuts_overlapping(active_cut_data_a6_pre[1], 1, '2a6 newer slopecount')
-#plot_all_cuts_overlapping(active_cut_data_a6_pre[2], 1, '3a6 newer slopecount')
-#plot_all_cuts_overlapping(active_cut_data_a6_pre[3], 1, '4a6 newer slopecount')
-#plot_all_cuts_overlapping(active_cut_data_a6_pre[4], 1, '5a6 newer slopecount')
-
-# TODO Hier daten zwischenspeichern?
 
 def clean_train_quick_and_dirty(data, offset_percent, class_=None):
     print('start clean clean_train_quick_and_dirty')
@@ -746,16 +682,6 @@ def clean_test_quick_and_dirty(data, toffset_percent, class_=None):
         data = None
         print('wrong class namestring in clean_quick_and_dirty TESTBAND')
     return data
-
-# TODO cutas mit löschen sonst stimmen hinterher die dimensionen nicht merh
-# active_cut_data_a6 = clean_train_quick_and_dirty(active_cut_data_a6_pre, 0.5, 'a6')
-# active_cut_data_a47 = clean_train_quick_and_dirty(active_cut_data_a47_pre, 0.5, 'a47')
-# active_cut_data_a49 = clean_train_quick_and_dirty(active_cut_data_a49_pre, 0.5, 'a49')
-#  TODO dureations berechne ich erst nachdem ich bereinigt habe - ich brauche die bereinidungsindizes, dennn aud den cutas bereinige ich nicht!
-
-all_3_domains = [active_cut_data_a6_pre, active_cut_data_a47_pre, active_cut_data_a49_pre]
-
-
 def calc_cut_durations(ctru, cfa):
     begin_a6 = [x['shifted'].values for x in ctru]
     end_a6 = [x['shifted'].values for x in cfa]
@@ -768,11 +694,11 @@ def calc_cut_durations(ctru, cfa):
     durations = np.concatenate(durations)
     return durations
 
-def make_array(all_active_cut, cuta_true, cuta_false, rel_ids_no_list):
+def make_array(all_active_cut, cuta_true, cuta_false, col_size):
 
     durations = calc_cut_durations(cuta_true, cuta_false)
 
-    col_size = len(['duration'] + rel_ids_no_list + ['class']) +24 #7 für die restlichen einträge in fbands
+    col_size = col_size
     row_size = len(durations)
     first_bigger_array = np.zeros((row_size, col_size))
 
@@ -824,107 +750,215 @@ def make_array(all_active_cut, cuta_true, cuta_false, rel_ids_no_list):
     first_bigger_array[mask] = first_bigger_array[np.nonzero(mask)[0], idx[mask]]
 
     return first_bigger_array, ends
-print('ma')
 
-arr_TRAINBAND_49, ends_TRAINBAND_49 = make_array(active_cut_data_a49_pre, cutas_TRAINBAND_true_a49, cutas_TRAINBAND_false_a49, rel_ids_no_list)
-arr_TRAINBAND_47, ends_TRAINBAND_47 = make_array(active_cut_data_a47_pre, cutas_TRAINBAND_true_a47, cutas_TRAINBAND_false_a47, rel_ids_no_list)
-arr_TRAINBAND__6, ends_TRAINBAND__6 = make_array(active_cut_data_a6_pre, cutas_TRAINBAND_true_a6, cutas_TRAINBAND_false_a6, rel_ids_no_list)
-print('ma')
+path_final_data = 'E:\\ausgelagert thesis daten\\final_data\\cut_start_stop_times'
+print('here')
+cutas_TRAINBAND_true_a6 = cuta_TRAINBAND_true(path_final_data, 'a6')
+cutas_TRAINBAND_false_a6 = cuta_TRAINBAND_false(path_final_data, 'a6')
+cutas_TRAINBAND_true_a47 = cuta_TRAINBAND_true(path_final_data, 'a47')
+cutas_TRAINBAND_false_a47 = cuta_TRAINBAND_false(path_final_data, 'a47')
+cutas_TRAINBAND_true_a49 = cuta_TRAINBAND_true(path_final_data, 'a49')
+cutas_TRAINBAND_false_a49 = cuta_TRAINBAND_false(path_final_data, 'a49')
 
-arr_TESTBAND_49, ends_TESTBAND_49 = make_array(active_cut_data_a49_pre, cutas_TESTBAND_true_a49, cutas_TESTBAND_false_a49, rel_ids_no_list)
-arr_TESTBAND_47, ends_TESTBAND_47 = make_array(active_cut_data_a47_pre, cutas_TESTBAND_true_a47, cutas_TESTBAND_false_a47, rel_ids_no_list)
-arr_TESTBAND__6, ends_TESTBAND__6 = make_array(active_cut_data_a6_pre, cutas_TRAINBAND_true_a6, cutas_TRAINBAND_false_a6, rel_ids_no_list)
+cutas_TESTBAND_true_a6 = cuta_TRAINBAND_true(path_final_data, 'a6')
+cutas_TESTBAND_false_a6 = cuta_TRAINBAND_false(path_final_data, 'a6')
+cutas_TESTBAND_true_a47 = cuta_TRAINBAND_true(path_final_data, 'a47')
+cutas_TESTBAND_false_a47 = cuta_TRAINBAND_false(path_final_data, 'a47')
+cutas_TESTBAND_true_a49 = cuta_TRAINBAND_true(path_final_data, 'a49')
+cutas_TESTBAND_false_a49 = cuta_TRAINBAND_false(path_final_data, 'a49')
+
+print('load data')
+ka6_id_ = [concat_dfs_sep_ids(x) for x in pahts_data[0:5]]
+ka47_id_ = [concat_dfs_sep_ids(x) for x in pahts_data[5:10]]
+ka49_id_ = [concat_dfs_sep_ids(x) for x in pahts_data[10:]]
+print('load data')
+tka6_id_ = [concat_dfs_sep_ids(x) for x in tpahts_data[0:5]]
+tka47_id_ = [concat_dfs_sep_ids(x) for x in tpahts_data[5:10]]
+tka49_id_ = [concat_dfs_sep_ids(x) for x in tpahts_data[10:]]
 
 # TODO Hier daten zwischenspeichern?
 
 
-# -------|
-# SPLIT--|
-# -------|
-test_split_size = 0.33
-X_train_TRAINBAND_49, X_test_TRAINBAND_49, y_train_TRAINBAND_49, y_test_TRAINBAND_49 = train_test_split(arr_TRAINBAND_49[:, 1:], arr_TRAINBAND_49[:, 0], test_size=test_split_size)
-X_train_TRAINBAND_47, X_test_TRAINBAND_47, y_train_TRAINBAND_47, y_test_TRAINBAND_47 = train_test_split(arr_TRAINBAND_47[:, 1:], arr_TRAINBAND_47[:, 0], test_size=test_split_size)
-X_train_TRAINBAND__6,  X_test_TRAINBAND__6,  y_train_TRAINBAND__6, y_test_TRAINBAND__6 = train_test_split(arr_TRAINBAND__6[:, 1:], arr_TRAINBAND__6[:, 0], test_size=test_split_size)
+print('sep')
+TRAINBAND_ka6_id =  seperate_fbands(ka6_id_)
+TRAINBAND_ka47_id = seperate_fbands(ka47_id_)
+TRAINBAND_ka49_id = seperate_fbands(ka49_id_)
+print('sep')
 
-#X_train_TRAINBAND_scaled_49, X_test_TRAINBAND_scaled_49 = standardize_data(X_train_TRAINBAND_49, X_test_TRAINBAND_49)
-#X_train_TRAINBAND_scaled_47, X_test_TRAINBAND_scaled_47 = standardize_data(X_train_TRAINBAND_47, X_test_TRAINBAND_47)
-#X_train_TRAINBAND_scaled__6, X_test_TRAINBAND_scaled__6 = standardize_data(X_train_TRAINBAND__6, X_test_TRAINBAND__6)
-X_test_TESTBAND__6 = arr_TESTBAND__6[:, 1:]
-X_test_TESTBAND_47 = arr_TESTBAND_47[:, 1:]
-X_test_TESTBAND_49 = arr_TESTBAND_49[:, 1:]
-y_test_TESTBAND__6 = arr_TESTBAND__6[:, 0]
-y_test_TESTBAND_47 = arr_TESTBAND_47[:, 0]
-y_test_TESTBAND_49 = arr_TESTBAND_49[:, 0]
+TESTBAND_ka6_id =  seperate_fbands(tka6_id_)
+TESTBAND_ka47_id = seperate_fbands(tka47_id_)
+TESTBAND_ka49_id = seperate_fbands(tka49_id_)
 
-# brauche ich nicht, da ich nicht dauarf trainiere
-#test_split_size = 0.33
-#X_train_TESTBAND_49, X_test_TESTBAND_49, y_train_TESTBAND_49, y_test_TESTBAND_49 = train_test_split(arr_TESTBAND_49[:, 1:], arr_TESTBAND_49[:, 0], test_size=test_split_size)
-#X_train_TESTBAND_47, X_test_TESTBAND_47, y_train_TESTBAND_47, y_test_TESTBAND_47 = train_test_split(arr_TESTBAND_47[:, 1:], arr_TESTBAND_47[:, 0], test_size=test_split_size)
-#X_train_TESTBAND__6,  X_test_TESTBAND__6,  y_train_TESTBAND__6, y_test_TESTBAND__6 = train_test_split(arr_TESTBAND__6[:, 1:], arr_TESTBAND__6[:, 0], test_size=test_split_size)
 
-#standardizing = """
-# train scaler on TRAININGBAND and transform TESTBAND
-_, X_test_TESTBAND_49 = standardize_data(X_train_TRAINBAND_49, X_test_TESTBAND_49)
-_, X_test_TESTBAND_47 = standardize_data(X_train_TRAINBAND_47, X_test_TESTBAND_47)
-_, X_test_TESTBAND__6 = standardize_data(X_train_TRAINBAND__6, X_test_TESTBAND__6)
+idx_range_with_seperate_fbands = list(range(65, 89))
 
-X_train_TRAINBAND_49, X_test_TRAINBAND_49 = standardize_data(X_train_TRAINBAND_49, X_test_TRAINBAND_49)
-X_train_TRAINBAND_47, X_test_TRAINBAND_47 = standardize_data(X_train_TRAINBAND_47, X_test_TRAINBAND_47)
-X_train_TRAINBAND__6, X_test_TRAINBAND__6 = standardize_data(X_train_TRAINBAND__6, X_test_TRAINBAND__6)
-#"""
-print('ca')
+ids_data_only = rel_ids_no_list_no_vibs
+ids_vibs_only = rel_ids_vib_only_no_list + idx_range_with_seperate_fbands
+ids_vibs_data_no_sig = rel_ids_no_list + idx_range_with_seperate_fbands
+ids_all_with_sig = 'yet to come'
+print('a')
+""""""
+def pipeline(new_ids, col_size):
+    active_cut_data_a6_pre = [sep_cuts_all_sensors(cutas_TRAINBAND_true_a6[i], cutas_TRAINBAND_false_a6[i], j, new_ids, 0, 0) for i, j in enumerate(TRAINBAND_ka6_id)]
+    print('ta')
+    active_cut_data_a47_pre = [sep_cuts_all_sensors(cutas_TRAINBAND_true_a47[i], cutas_TRAINBAND_false_a47[i], j, new_ids, 0, 0) for i, j in enumerate(TRAINBAND_ka47_id)]
+    print('ta')
+    active_cut_data_a49_pre = [sep_cuts_all_sensors(cutas_TRAINBAND_true_a49[i], cutas_TRAINBAND_false_a49[i], j, new_ids, 0, 0) for i, j in enumerate(TRAINBAND_ka49_id)]
+    print('ta')
 
-# ------------------------
-# ------PERFORMANCE-------
-# ------------------------
-# ---
-# a49
-# ---
+    tactive_cut_data_a6_pre = [sep_cuts_all_sensors(cutas_TESTBAND_true_a6[i], cutas_TESTBAND_false_a6[i], j, new_ids, 0, 0) for i, j in enumerate(TESTBAND_ka6_id)]
+    tactive_cut_data_a47_pre = [sep_cuts_all_sensors(cutas_TESTBAND_true_a47[i], cutas_TESTBAND_false_a47[i], j, new_ids, 0, 0) for i, j in enumerate(TESTBAND_ka47_id)]
+    tactive_cut_data_a49_pre = [sep_cuts_all_sensors(cutas_TESTBAND_true_a49[i], cutas_TESTBAND_false_a49[i], j, new_ids, 0, 0) for i, j in enumerate(TESTBAND_ka49_id)]
+    #active_cut_data1a6_newer =  sep_cuts_all_sensors(cutactive_true1a6, cutactive_false1a6, k1a6_id, rel_ids_no_list, 0, 0)
+    #active_cut_data2a6_newer =  sep_cuts_all_sensors(cutactive_true2a6, cutactive_false2a6, k2a6_id, rel_ids_no_list, 0, 0)
+    #active_cut_data3a6_newer =  sep_cuts_all_sensors(cutactive_true3a6, cutactive_false3a6, k3a6_id, rel_ids_no_list, 0, 0)
+    #active_cut_data4a6_newer =  sep_cuts_all_sensors(cutactive_true4a6, cutactive_false4a6, k4a6_id, rel_ids_no_list, 0, 0)
+    #active_cut_data5a6_newer =  sep_cuts_all_sensors(cutactive_true5a6, cutactive_false5a6, k5a6_id, rel_ids_no_list, 0, 0)
 
-clf__6 = Classifiers('a6')
-models__6 = clf__6.fitting(X_train_TRAINBAND__6, y_train_TRAINBAND__6)
-clf_47 = Classifiers('a47')
-models_47 = clf_47.fitting(X_train_TRAINBAND_47, y_train_TRAINBAND_47)
-clf_49 = Classifiers('a49')
-models_49 = clf_49.fitting(X_train_TRAINBAND_49, y_train_TRAINBAND_49)
+    #plot_all_cuts_overlapping(active_cut_data_a6_pre[0], 1, '1a6 newer slopecount')
+    #plot_all_cuts_overlapping(active_cut_data_a6_pre[1], 1, '2a6 newer slopecount')
+    #plot_all_cuts_overlapping(active_cut_data_a6_pre[2], 1, '3a6 newer slopecount')
+    #plot_all_cuts_overlapping(active_cut_data_a6_pre[3], 1, '4a6 newer slopecount')
+    #plot_all_cuts_overlapping(active_cut_data_a6_pre[4], 1, '5a6 newer slopecount')
 
-report__6            = clf__6.predicting(X_test_TRAINBAND__6).class_report(y_test_TRAINBAND__6)
-scores__6            = clf__6.score_table(y_test_TRAINBAND__6)
-report_47            = clf_47.predicting(X_test_TRAINBAND_47).class_report(y_test_TRAINBAND_47)
-scores_47            = clf_47.score_table(y_test_TRAINBAND_47)
-report_49            = clf_49.predicting(X_test_TRAINBAND_49).class_report(y_test_TRAINBAND_49)
-scores_49            = clf_49.score_table(y_test_TRAINBAND_49)
-report__6_47         = clf__6.predicting(X_test_TRAINBAND_47).class_report(y_test_TRAINBAND_47)
-scores__6_47         = clf__6.score_table(y_test_TRAINBAND_47)
-report_47__6         = clf_47.predicting(X_test_TRAINBAND__6).class_report(y_test_TRAINBAND__6)
-scores_47__6         = clf_47.score_table(y_test_TRAINBAND__6)
-report_49__6         = clf_49.predicting(X_test_TRAINBAND__6).class_report(y_test_TRAINBAND__6)
-scores_49__6         = clf_49.score_table(y_test_TRAINBAND__6)
-report__6_49         = clf__6.predicting(X_test_TRAINBAND_49).class_report(y_test_TRAINBAND_49)
-scores__6_49         = clf__6.score_table(y_test_TRAINBAND_49)
-report_47_49         = clf_47.predicting(X_test_TRAINBAND_49).class_report(y_test_TRAINBAND_49)
-scores_47_49         = clf_47.score_table(y_test_TRAINBAND_49)
-report_49_47         = clf_49.predicting(X_test_TRAINBAND_47).class_report(y_test_TRAINBAND_47)
-scores_49_47         = clf_49.score_table(y_test_TRAINBAND_47)
-TESTBANDreport__6    = clf__6.predicting(X_test_TESTBAND__6).class_report(y_test_TESTBAND__6)
-TESTBANDscores__6    = clf__6.score_table(y_test_TESTBAND__6)
-TESTBANDreport_47    = clf_47.predicting(X_test_TESTBAND_47).class_report(y_test_TESTBAND_47)
-TESTBANDscores_47    = clf_47.score_table(y_test_TESTBAND_47)
-TESTBANDreport_49    = clf_49.predicting(X_test_TESTBAND_49).class_report(y_test_TESTBAND_49)
-TESTBANDscores_49    = clf_49.score_table(y_test_TESTBAND_49)
-TESTBANDreport__6_47 = clf__6.predicting(X_test_TESTBAND_47).class_report(y_test_TESTBAND_47)
-TESTBANDscores__6_47 = clf__6.score_table(y_test_TESTBAND_47)
-TESTBANDreport_47__6 = clf_47.predicting(X_test_TESTBAND__6).class_report(y_test_TESTBAND__6)
-TESTBANDscores_47__6 = clf_47.score_table(y_test_TESTBAND__6)
-TESTBANDreport_49__6 = clf_49.predicting(X_test_TESTBAND__6).class_report(y_test_TESTBAND__6)
-TESTBANDscores_49__6 = clf_49.score_table(y_test_TESTBAND__6)
-TESTBANDreport__6_49 = clf__6.predicting(X_test_TESTBAND_49).class_report(y_test_TESTBAND_49)
-TESTBANDscores__6_49 = clf__6.score_table(y_test_TESTBAND_49)
-TESTBANDreport_47_49 = clf_47.predicting(X_test_TESTBAND_49).class_report(y_test_TESTBAND_49)
-TESTBANDscores_47_49 = clf_47.score_table(y_test_TESTBAND_49)
-TESTBANDreport_49_47 = clf_49.predicting(X_test_TESTBAND_47).class_report(y_test_TESTBAND_47)
-TESTBANDscores_49_47 = clf_49.score_table(y_test_TESTBAND_47)
+    # TODO Hier daten zwischenspeichern?
 
+
+    # TODO cutas mit löschen sonst stimmen hinterher die dimensionen nicht merh
+    # active_cut_data_a6 = clean_train_quick_and_dirty(active_cut_data_a6_pre, 0.5, 'a6')
+    # active_cut_data_a47 = clean_train_quick_and_dirty(active_cut_data_a47_pre, 0.5, 'a47')
+    # active_cut_data_a49 = clean_train_quick_and_dirty(active_cut_data_a49_pre, 0.5, 'a49')
+    #  TODO dureations berechne ich erst nachdem ich bereinigt habe - ich brauche die bereinidungsindizes, dennn aud den cutas bereinige ich nicht!
+
+
+
+
+
+    all_3_domains = [active_cut_data_a6_pre, active_cut_data_a47_pre, active_cut_data_a49_pre]
+    print('ma')
+
+    arr_TRAINBAND_49, ends_TRAINBAND_49 = make_array(active_cut_data_a49_pre, cutas_TRAINBAND_true_a49, cutas_TRAINBAND_false_a49, col_size)
+    arr_TRAINBAND_47, ends_TRAINBAND_47 = make_array(active_cut_data_a47_pre, cutas_TRAINBAND_true_a47, cutas_TRAINBAND_false_a47, col_size)
+    arr_TRAINBAND__6, ends_TRAINBAND__6 = make_array(active_cut_data_a6_pre, cutas_TRAINBAND_true_a6, cutas_TRAINBAND_false_a6, col_size)
+    print('ma')
+
+    arr_TESTBAND_49, ends_TESTBAND_49 = make_array(active_cut_data_a49_pre, cutas_TESTBAND_true_a49, cutas_TESTBAND_false_a49, col_size)
+    arr_TESTBAND_47, ends_TESTBAND_47 = make_array(active_cut_data_a47_pre, cutas_TESTBAND_true_a47, cutas_TESTBAND_false_a47, col_size)
+    arr_TESTBAND__6, ends_TESTBAND__6 = make_array(active_cut_data_a6_pre, cutas_TRAINBAND_true_a6, cutas_TRAINBAND_false_a6, col_size)
+
+    # TODO Hier daten zwischenspeichern?
+
+
+    # -------|
+    # SPLIT--|
+    # -------|
+    test_split_size = 0.33
+    X_train_TRAINBAND_49, X_test_TRAINBAND_49, y_train_TRAINBAND_49, y_test_TRAINBAND_49 = train_test_split(arr_TRAINBAND_49[:, 1:], arr_TRAINBAND_49[:, 0], test_size=test_split_size)
+    X_train_TRAINBAND_47, X_test_TRAINBAND_47, y_train_TRAINBAND_47, y_test_TRAINBAND_47 = train_test_split(arr_TRAINBAND_47[:, 1:], arr_TRAINBAND_47[:, 0], test_size=test_split_size)
+    X_train_TRAINBAND__6,  X_test_TRAINBAND__6,  y_train_TRAINBAND__6, y_test_TRAINBAND__6 = train_test_split(arr_TRAINBAND__6[:, 1:], arr_TRAINBAND__6[:, 0], test_size=test_split_size)
+
+    #X_train_TRAINBAND_scaled_49, X_test_TRAINBAND_scaled_49 = standardize_data(X_train_TRAINBAND_49, X_test_TRAINBAND_49)
+    #X_train_TRAINBAND_scaled_47, X_test_TRAINBAND_scaled_47 = standardize_data(X_train_TRAINBAND_47, X_test_TRAINBAND_47)
+    #X_train_TRAINBAND_scaled__6, X_test_TRAINBAND_scaled__6 = standardize_data(X_train_TRAINBAND__6, X_test_TRAINBAND__6)
+    X_test_TESTBAND__6 = arr_TESTBAND__6[:, 1:]
+    X_test_TESTBAND_47 = arr_TESTBAND_47[:, 1:]
+    X_test_TESTBAND_49 = arr_TESTBAND_49[:, 1:]
+    y_test_TESTBAND__6 = arr_TESTBAND__6[:, 0]
+    y_test_TESTBAND_47 = arr_TESTBAND_47[:, 0]
+    y_test_TESTBAND_49 = arr_TESTBAND_49[:, 0]
+
+    # brauche ich nicht, da ich nicht dauarf trainiere
+    #test_split_size = 0.33
+    #X_train_TESTBAND_49, X_test_TESTBAND_49, y_train_TESTBAND_49, y_test_TESTBAND_49 = train_test_split(arr_TESTBAND_49[:, 1:], arr_TESTBAND_49[:, 0], test_size=test_split_size)
+    #X_train_TESTBAND_47, X_test_TESTBAND_47, y_train_TESTBAND_47, y_test_TESTBAND_47 = train_test_split(arr_TESTBAND_47[:, 1:], arr_TESTBAND_47[:, 0], test_size=test_split_size)
+    #X_train_TESTBAND__6,  X_test_TESTBAND__6,  y_train_TESTBAND__6, y_test_TESTBAND__6 = train_test_split(arr_TESTBAND__6[:, 1:], arr_TESTBAND__6[:, 0], test_size=test_split_size)
+
+    #standardizing = """
+    # train scaler on TRAININGBAND and transform TESTBAND
+    _, X_test_TESTBAND_49 = standardize_data(X_train_TRAINBAND_49, X_test_TESTBAND_49)
+    _, X_test_TESTBAND_47 = standardize_data(X_train_TRAINBAND_47, X_test_TESTBAND_47)
+    _, X_test_TESTBAND__6 = standardize_data(X_train_TRAINBAND__6, X_test_TESTBAND__6)
+
+    X_train_TRAINBAND_49, X_test_TRAINBAND_49 = standardize_data(X_train_TRAINBAND_49, X_test_TRAINBAND_49)
+    X_train_TRAINBAND_47, X_test_TRAINBAND_47 = standardize_data(X_train_TRAINBAND_47, X_test_TRAINBAND_47)
+    X_train_TRAINBAND__6, X_test_TRAINBAND__6 = standardize_data(X_train_TRAINBAND__6, X_test_TRAINBAND__6)
+    #"""
+    print('ca')
+
+    # ------------------------
+    # ------PERFORMANCE-------
+    # ------------------------
+    # ---
+    # a49
+    # ---
+
+    clf__6 = Classifiers('a6')
+    models__6 = clf__6.fitting(X_train_TRAINBAND__6, y_train_TRAINBAND__6)
+    clf_47 = Classifiers('a47')
+    models_47 = clf_47.fitting(X_train_TRAINBAND_47, y_train_TRAINBAND_47)
+    clf_49 = Classifiers('a49')
+    models_49 = clf_49.fitting(X_train_TRAINBAND_49, y_train_TRAINBAND_49)
+
+    report__6            = clf__6.predicting(X_test_TRAINBAND__6).class_report(y_test_TRAINBAND__6)
+    scores__6            = clf__6.score_table(y_test_TRAINBAND__6)
+    report_47            = clf_47.predicting(X_test_TRAINBAND_47).class_report(y_test_TRAINBAND_47)
+    scores_47            = clf_47.score_table(y_test_TRAINBAND_47)
+    report_49            = clf_49.predicting(X_test_TRAINBAND_49).class_report(y_test_TRAINBAND_49)
+    scores_49            = clf_49.score_table(y_test_TRAINBAND_49)
+    report__6_47         = clf__6.predicting(X_test_TRAINBAND_47).class_report(y_test_TRAINBAND_47)
+    scores__6_47         = clf__6.score_table(y_test_TRAINBAND_47)
+    report_47__6         = clf_47.predicting(X_test_TRAINBAND__6).class_report(y_test_TRAINBAND__6)
+    scores_47__6         = clf_47.score_table(y_test_TRAINBAND__6)
+    report_49__6         = clf_49.predicting(X_test_TRAINBAND__6).class_report(y_test_TRAINBAND__6)
+    scores_49__6         = clf_49.score_table(y_test_TRAINBAND__6)
+    report__6_49         = clf__6.predicting(X_test_TRAINBAND_49).class_report(y_test_TRAINBAND_49)
+    scores__6_49         = clf__6.score_table(y_test_TRAINBAND_49)
+    report_47_49         = clf_47.predicting(X_test_TRAINBAND_49).class_report(y_test_TRAINBAND_49)
+    scores_47_49         = clf_47.score_table(y_test_TRAINBAND_49)
+    report_49_47         = clf_49.predicting(X_test_TRAINBAND_47).class_report(y_test_TRAINBAND_47)
+    scores_49_47         = clf_49.score_table(y_test_TRAINBAND_47)
+    TESTBANDreport__6    = clf__6.predicting(X_test_TESTBAND__6).class_report(y_test_TESTBAND__6)
+    TESTBANDscores__6    = clf__6.score_table(y_test_TESTBAND__6)
+    TESTBANDreport_47    = clf_47.predicting(X_test_TESTBAND_47).class_report(y_test_TESTBAND_47)
+    TESTBANDscores_47    = clf_47.score_table(y_test_TESTBAND_47)
+    TESTBANDreport_49    = clf_49.predicting(X_test_TESTBAND_49).class_report(y_test_TESTBAND_49)
+    TESTBANDscores_49    = clf_49.score_table(y_test_TESTBAND_49)
+    TESTBANDreport__6_47 = clf__6.predicting(X_test_TESTBAND_47).class_report(y_test_TESTBAND_47)
+    TESTBANDscores__6_47 = clf__6.score_table(y_test_TESTBAND_47)
+    TESTBANDreport_47__6 = clf_47.predicting(X_test_TESTBAND__6).class_report(y_test_TESTBAND__6)
+    TESTBANDscores_47__6 = clf_47.score_table(y_test_TESTBAND__6)
+    TESTBANDreport_49__6 = clf_49.predicting(X_test_TESTBAND__6).class_report(y_test_TESTBAND__6)
+    TESTBANDscores_49__6 = clf_49.score_table(y_test_TESTBAND__6)
+    TESTBANDreport__6_49 = clf__6.predicting(X_test_TESTBAND_49).class_report(y_test_TESTBAND_49)
+    TESTBANDscores__6_49 = clf__6.score_table(y_test_TESTBAND_49)
+    TESTBANDreport_47_49 = clf_47.predicting(X_test_TESTBAND_49).class_report(y_test_TESTBAND_49)
+    TESTBANDscores_47_49 = clf_47.score_table(y_test_TESTBAND_49)
+    TESTBANDreport_49_47 = clf_49.predicting(X_test_TESTBAND_47).class_report(y_test_TESTBAND_47)
+    TESTBANDscores_49_47 = clf_49.score_table(y_test_TESTBAND_47)
+
+    return {'report__6': report__6, 'scores__6': scores__6,'report_47': report_47,'scores_47': scores_47,
+            'report_49': report_49,'scores_49': scores_49,'report__6_47': report__6_47,'scores__6_47': scores__6_47,
+            'report_47__6': report_47__6,'scores_47__6': scores_47__6,'report_49__6': report_49__6,
+            'scores_49__6': scores_49__6,'report__6_49': report__6_49,'scores__6_49': scores__6_49,
+            'report_47_49': report_47_49,'scores_47_49': scores_47_49,'report_49_47': report_49_47,
+            'scores_49_47': scores_49_47,'TESTBANDreport__6': TESTBANDreport__6,'TESTBANDscores__6': TESTBANDscores__6,
+            'TESTBANDreport_47': TESTBANDreport_47,'TESTBANDscores_47': TESTBANDscores_47,
+            'TESTBANDreport_49': TESTBANDreport_49,'TESTBANDscores_49': TESTBANDscores_49,
+            'TESTBANDreport__6_47': TESTBANDreport__6_47,'TESTBANDscores__6_47': TESTBANDscores__6_47,
+            'TESTBANDreport_47__6': TESTBANDreport_47__6,'TESTBANDscores_47__6': TESTBANDscores_47__6,
+            'TESTBANDreport_49__6': TESTBANDreport_49__6,'TESTBANDscores_49__6': TESTBANDscores_49__6,
+            'TESTBANDreport__6_49': TESTBANDreport__6_49,'TESTBANDscores__6_49': TESTBANDscores__6_49,
+            'TESTBANDreport_47_49': TESTBANDreport_47_49,'TESTBANDscores_47_49': TESTBANDscores_47_49,
+            'TESTBANDreport_49_47': TESTBANDreport_49_47,'TESTBANDscores_49_47': TESTBANDscores_49_47}
+
+if __name__ == "__main__":
+    col_size = len(['duration'] + ids_data_only + ['class']) #+24 #7 für die restlichen einträge in fbands
+
+    dict_ids_data_only = pipeline(ids_data_only, col_size)
+
+
+
+"""
 from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_validate
 
@@ -942,9 +976,7 @@ cv = KFold(n_splits=5, random_state=1, shuffle=True)
 res = []
 for c in cl:
     res.append(cross_validate(c, X_train_TRAINBAND__6, y_train_TRAINBAND__6, scoring=sc, cv=cv, n_jobs=-1, return_estimator=True))
-
-
-
+"""
 
 scoring="f1"
 
@@ -1080,7 +1112,7 @@ scores_vanilla_scaled__6_49 = metric_tables(y_test_TRAINBAND_49, results_vanilla
 
 
 
-
+"""
 
 clf_index = ['DecisionTreeClassifier', 'BaggingClassifier', 'RandomForestClassifier',
              'GaussianNB', 'LogisticRegression', 'LinearDiscriminantAnalysis',
@@ -1114,7 +1146,7 @@ plt.title('F1 Scores For Each Classifier')
 
 plt.xlim((0,1.05))
 plt.tight_layout()
-"""
+
 class_names = ['class 1', 'class 2', 'class 3', 'class 4', 'class 5']
 X_test, =
 y_test =
@@ -1138,7 +1170,7 @@ for title, normalize in titles_options:
     print(disp.confusion_matrix)
 
 plt.show()
-"""
+
 
 
 
@@ -1260,6 +1292,6 @@ df_means_all_clfs.loc[:, 'mean F1 macro over all domains'].plot(ax=axs[2], kind=
                                                            color=[colors_clfs[x] for x in df_means_all_clfs.index],
                                                            ylim=[0, 1], title='mean F1 all domains', grid=True)
 plt.tight_layout()
-
+"""
 
 
